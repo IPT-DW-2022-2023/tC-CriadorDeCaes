@@ -6,10 +6,16 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")??throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+
+
+// especifica onde está a Base de Dados
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")??throw new InvalidOperationException("não consegui encontrar o servidor de BD referenciado");
+// definir o tipo de servidor de base de dados que será utilizado
+builder.Services.AddDbContext<ApplicationDbContext>(
+   options => options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount=true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
