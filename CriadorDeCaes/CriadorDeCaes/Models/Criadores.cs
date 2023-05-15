@@ -8,7 +8,7 @@ namespace CriadorDeCaes.Models {
    public class Criadores {
 
       public Criadores() {
-         ListaAnimais=new HashSet<Animais>();
+         ListaAnimais = new HashSet<Animais>();
       }
 
 
@@ -16,6 +16,12 @@ namespace CriadorDeCaes.Models {
        * Anotadores
        * https://learn.microsoft.com/en-us/ef/ef6/modeling/code-first/data-annotations
        * https://www.entityframeworktutorial.net/code-first/dataannotation-in-code-first.aspx
+       * 
+       * Expressões Regulares
+       * https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference
+       * https://regexr.com/
+       * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions
+       * 
        */
 
 
@@ -34,7 +40,7 @@ namespace CriadorDeCaes.Models {
       /// nome pelo qual o criador é conhecido no 
       /// negócio de venda de cães
       /// </summary>
-      [Display(Name ="Nome Comercial")]
+      [Display(Name = "Nome Comercial")]
       public string NomeComercial { get; set; }
 
       /// <summary>
@@ -46,14 +52,20 @@ namespace CriadorDeCaes.Models {
       /// <summary>
       /// Código Postal da morada do criador
       /// </summary>
-      [Required(ErrorMessage ="O {0} é de preenchimento obrigatório")]
-      [Display(Name ="Código Postal")]
+      [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+      [Display(Name = "Código Postal")]
+      [RegularExpression("[1-9][0-9]{3}-[0-9]{3} [A-ZÇÁÉÍÓÚ]+[A-Z -ÁÉÍÓÚÇ]*",
+         ErrorMessage ="O {0} deve ser escrito no formato XXXX-XXX NOME DA TERRA")]
       public string CodPostal { get; set; }
 
       /// <summary>
       /// Telemóvel do criador
       /// </summary>
-      [Display(Name ="Telemóvel")]
+      [Display(Name = "Telemóvel")]
+      [StringLength(9, MinimumLength = 9,
+         ErrorMessage = "O {0} tem de ter {1} digitos" )]
+      [RegularExpression("9[1236][0-9]{7}", 
+         ErrorMessage ="Tem de escrever um nº de {0} válido")]
       public string Telemovel { get; set; }
 
       /// <summary>
