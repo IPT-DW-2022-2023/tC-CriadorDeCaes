@@ -1,78 +1,90 @@
 ﻿@model CriadorDeCaes.Models.Animais
 
 @{
-    ViewData["Title"] = "Adicionar";
+   ViewData["Title"] = "Adicionar";
 }
 
 <h1>Adicionar um novo animal</h1>
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+   <div class="col-md-4">
+       @* no formulário é necessário especificar a opção
+      enctype="multipart/form-data" para garantir que o formulário 
+      exporta ficheiros
+      *@
+      <form asp-action="Create" enctype="multipart/form-data"   >
 
-            @* zona para mostrar as mensagens de erro *@
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-            @* item do formulário*@
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
+         @* zona para mostrar as mensagens de erro *@
+         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="Sexo" class="control-label"></label>
-                <input asp-for="Sexo" class="form-control" />
-                <span asp-validation-for="Sexo" class="text-danger"></span>
-            </div>
+         @* item do formulário*@
+         <div class="form-group">
+            <label asp-for="Nome" class="control-label"></label>
+            <input asp-for="Nome" class="form-control" />
+            <span asp-validation-for="Nome" class="text-danger"></span>
+         </div>
 
-            <div class="form-group">
-                <label asp-for="DataNasc" class="control-label"></label>
-                <input asp-for="DataNasc" class="form-control" />
-                <span asp-validation-for="DataNasc" class="text-danger"></span>
-            </div>
+         <div class="form-group">
+            <label asp-for="Sexo" class="control-label"></label>
+            <input asp-for="Sexo" class="form-control" />
+            <span asp-validation-for="Sexo" class="text-danger"></span>
+         </div>
 
-            <div class="form-group">
-                <label asp-for="DataCompra" class="control-label"></label>
-                <input asp-for="DataCompra" class="form-control" />
-                <span asp-validation-for="DataCompra" class="text-danger"></span>
-            </div>
+         <div class="form-group">
+            <label asp-for="DataNasc" class="control-label"></label>
+            <input asp-for="DataNasc" class="form-control" />
+            <span asp-validation-for="DataNasc" class="text-danger"></span>
+         </div>
 
-            <div class="form-group">
-                <label asp-for="RegistoLOP" class="control-label"></label>
-                <input asp-for="RegistoLOP" class="form-control" />
-                <span asp-validation-for="RegistoLOP" class="text-danger"></span>
-            </div>
+         <div class="form-group">
+            <label asp-for="DataCompra" class="control-label"></label>
+            <input asp-for="DataCompra" class="form-control" />
+            <span asp-validation-for="DataCompra" class="text-danger"></span>
+         </div>
 
-            @* 'dropdown' para as Raças*@
-            <div class="form-group">
-                <label asp-for="RacaFK" class="control-label"></label>
-                <select asp-for="RacaFK" class ="form-control" asp-items="ViewBag.RacaFK">
-                    <option value="0">Escolha, pf, uma raça</option>
-                </select>
-            </div>
+         <div class="form-group">
+            <label asp-for="RegistoLOP" class="control-label"></label>
+            <input asp-for="RegistoLOP" class="form-control" />
+            <span asp-validation-for="RegistoLOP" class="text-danger"></span>
+         </div>
 
-            @* 'dropdown' para os criadores *@
-            <div class="form-group">
-                <label asp-for="CriadorFK" class="control-label"></label>
-                <select asp-for="CriadorFK" class ="form-control" asp-items="ViewBag.CriadorFK">
-                    <option value="0">escolha, pf, um criador</option>
-                </select>
-            </div>
+         @* 'dropdown' para as Raças*@
+         <div class="form-group">
+            <label asp-for="RacaFK" class="control-label"></label>
+            <select asp-for="RacaFK" class="form-control" asp-items="ViewBag.RacaFK">
+               <option value="0">Escolha, pf, uma raça</option>
+            </select>
+         </div>
 
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+         @* 'dropdown' para os criadores *@
+         <div class="form-group">
+            <label asp-for="CriadorFK" class="control-label"></label>
+            <select asp-for="CriadorFK" class="form-control" asp-items="ViewBag.CriadorFK">
+               <option value="0">escolha, pf, um criador</option>
+            </select>
+         </div>
+
+         @* 'file picker' para efetuar a submissão de uma imagem *@
+         <div class="form-group">
+            <label class="control-label">Fotografia</label>
+            <input type="file" accept=".png,.jpg,.jpeg" name="fotografia" />
+         </div>
+
+         <br />
+         <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+         </div>
+      </form>
+   </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+   <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+   @{
+      await Html.RenderPartialAsync("_ValidationScriptsPartial");
+   }
 }
