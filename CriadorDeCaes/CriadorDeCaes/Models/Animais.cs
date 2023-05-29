@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CriadorDeCaes.Models {
    /// <summary>
@@ -33,17 +34,20 @@ namespace CriadorDeCaes.Models {
       /// <summary>
       /// Data de nascimento
       /// </summary>
+      [Display(Name ="Data Nascimento")]
       public DateTime DataNasc { get; set; }
 
       /// <summary>
       /// data de compra do animal
       /// Se nulo, o animal nasceu nas instalações do criador
       /// </summary>
+      [Display(Name ="Data Compra")]
       public DateTime DataCompra { get; set; }
 
       /// <summary>
       /// número de registo no LOP
       /// </summary>
+      [Display(Name ="Registo LOP")]
       public string RegistoLOP { get; set; }
 
       // ****************************************
@@ -59,13 +63,16 @@ namespace CriadorDeCaes.Models {
       /// FK para a identificação da Raça do animal
       /// </summary>
       [ForeignKey(nameof(Raca))]
+      [Display(Name ="Raça")]
       public int RacaFK { get; set; }
+      [Display(Name = "Raça")]
       public Racas Raca { get; set; }
 
       /// <summary>
       /// FK para o Criador dono do animal
       /// </summary>
       [ForeignKey(nameof(Criador))]
+      [Display(Name ="Criador")]
       public int CriadorFK { get; set; }
       public Criadores Criador { get; set; }
 
