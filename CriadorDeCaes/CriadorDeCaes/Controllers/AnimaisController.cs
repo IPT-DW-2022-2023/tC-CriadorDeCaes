@@ -96,12 +96,38 @@ namespace CriadorDeCaes.Controllers {
          if (animal.RacaFK == 0) {
             // não escolhi uma raça.
             // gerar mensagem de erro
-            ModelState.AddModelError("","Deve escolher uma raça, por favor.");
+            ModelState.AddModelError("", "Deve escolher uma raça, por favor.");
          }
          else {
             if (animal.CriadorFK == 0) {
                // não escolhi o Criador
                ModelState.AddModelError("", "Deve escolher um criador, por favor.");
+            }
+            else {
+               // se cheguei aqui é pq escolhi uma raça e um criador
+               // vamos avaliar o ficheiro, se é que ele existe
+               if (fotografia == null) {
+                  // não há ficheiro (imagem)
+                  animal.ListaFotografias.Add(new Fotografias {
+                     Data = DateTime.Now,
+                     Local = "no image",
+                     Ficheiro = "noAnimal.jpg"
+                  });
+               }
+               else {
+                  // se chego aqui, existe ficheiro
+                  // mas será imagem?
+                  if (fotografia.ContentType != "image/jpeg" &&
+                      fotografia.ContentType != "image/png") {
+                     // existe ficheiro, mas não é uma imagem
+                     // <=> ! (fotografia.ContentType == "image/jpeg" || fotografia.ContentType == "image/png")
+                     ModelState.AddModelError("", "Forneceu um ficheiro que não é uma imagem. Escolha, por favor, um ficheiro do tipo PNG ou JPG.");
+                  }
+                  else {
+                     // há imagem :-)
+
+                  }
+               }
             }
          }
 
@@ -113,14 +139,14 @@ namespace CriadorDeCaes.Controllers {
             }
          }
          catch (Exception) {
-            ModelState.AddModelError("", 
+            ModelState.AddModelError("",
                "Ocorreu um erro no acesso à base de dados... ");
-         //   throw;
+            //   throw;
          }
 
          // preparar os dados para serem devolvidos para a View
          ViewData["CriadorFK"] = new SelectList(_context.Criadores, "Id", "Nome", animal.CriadorFK);
-         ViewData["RacaFK"] = new SelectList(_context.Racas.OrderBy(r=>r.Nome), "Id", "Nome", animal.RacaFK);
+         ViewData["RacaFK"] = new SelectList(_context.Racas.OrderBy(r => r.Nome), "Id", "Nome", animal.RacaFK);
          return View(animal);
       }
 
