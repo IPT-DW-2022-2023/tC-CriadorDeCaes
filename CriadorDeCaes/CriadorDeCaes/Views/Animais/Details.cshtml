@@ -1,0 +1,69 @@
+﻿@model CriadorDeCaes.Models.Animais
+
+@{
+   ViewData["Title"] = "Detalhes";
+}
+
+<h1>Detalhes do @Model.Nome   </h1>
+
+<div>
+   <hr />
+   <dl class="row">
+      <dt class="col-sm-2">
+         @Html.DisplayNameFor(model => model.Nome)
+      </dt>
+      <dd class="col-sm-10">
+         @Html.DisplayFor(model => model.Nome)
+      </dd>
+
+      <dt class="col-sm-2">
+         @Html.DisplayNameFor(model => model.Sexo)
+      </dt>
+      <dd class="col-sm-10">
+         @Html.DisplayFor(model => model.Sexo)
+      </dd>
+
+      <dt class="col-sm-2">
+         @Html.DisplayNameFor(model => model.DataNasc)
+      </dt>
+      <dd class="col-sm-10">
+         @Html.DisplayFor(model => model.DataNasc)
+      </dd>
+
+      <dt class="col-sm-2">
+         @Html.DisplayNameFor(model => model.DataCompra)
+      </dt>
+      <dd class="col-sm-10">
+         @Html.DisplayFor(model => model.DataCompra)
+      </dd>
+
+      <dt class="col-sm-2">
+         @Html.DisplayNameFor(model => model.RegistoLOP)
+      </dt>
+      <dd class="col-sm-10">
+         @Html.DisplayFor(model => model.RegistoLOP)
+      </dd>
+
+      <dt class="col-sm-2">
+         @Html.DisplayNameFor(model => model.Raca)
+      </dt>
+      <dd class="col-sm-10">
+         @Html.DisplayFor(model => model.Raca.Nome)
+      </dd>
+
+      <dt class="col-sm-2">
+         @Html.DisplayNameFor(model => model.Criador)
+      </dt>
+      <dd class="col-sm-10">
+         <a asp-action="Details"
+            asp-controller="Criadores"
+            asp-route-id="@Model?.Criador.Id">
+            @Html.DisplayFor(x => x.Criador.Nome)
+         </a>
+      </dd>
+   </dl>
+</div>
+<div>
+   <a asp-action="Edit" asp-route-id="@Model?.Id">Editar</a> |
+   <a asp-action="Index">Regressar</a>
+</div>
