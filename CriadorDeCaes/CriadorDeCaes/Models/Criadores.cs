@@ -72,7 +72,7 @@ namespace CriadorDeCaes.Models {
       /// Email do criador
       /// </summary>
       [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
-      [EmailAddress]
+     // [EmailAddress]
       public string Email { get; set; }
 
       // *********************************************
