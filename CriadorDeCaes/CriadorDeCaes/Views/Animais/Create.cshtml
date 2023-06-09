@@ -43,6 +43,13 @@
             <span asp-validation-for="DataCompra" class="text-danger"></span>
          </div>
 
+         @* esta div teve de ser adicionada para acomodar o novo atributo*@
+          <div class="form-group">
+            <label asp-for="PrecoCompraAux" class="control-label"></label>
+            <input asp-for="PrecoCompraAux" class="form-control" />
+            <span asp-validation-for="PrecoCompraAux" class="text-danger"></span>
+         </div>
+
          <div class="form-group">
             <label asp-for="RegistoLOP" class="control-label"></label>
             <input asp-for="RegistoLOP" class="form-control" />

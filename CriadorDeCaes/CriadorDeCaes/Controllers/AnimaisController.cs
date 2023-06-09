@@ -99,7 +99,7 @@ namespace CriadorDeCaes.Controllers {
       // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<IActionResult> Create([Bind("Id,Nome,Sexo,DataNasc,DataCompra,RegistoLOP,RacaFK,CriadorFK")] Animais animal, IFormFile fotografia) {
+      public async Task<IActionResult> Create([Bind("Nome,Sexo,DataNasc,DataCompra,PrecoCompraAux,RegistoLOP,RacaFK,CriadorFK")] Animais animal, IFormFile fotografia) {
          // vars auxiliares
          bool existeFoto = false;
          string nomeFoto = "";
@@ -161,6 +161,15 @@ namespace CriadorDeCaes.Controllers {
                }
             }
          }
+
+
+         // atribuir os dados do PrecoCompraAux ao PrecoCompra
+         if (!string.IsNullOrEmpty(animal.PrecoCompraAux)) {
+            animal.PrecoCompra = 
+               Convert.ToDecimal( animal.PrecoCompraAux
+                                        .Replace('.',',') );
+         }
+
 
          try {
             if (ModelState.IsValid) {
