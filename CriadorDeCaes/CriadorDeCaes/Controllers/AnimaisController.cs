@@ -61,9 +61,9 @@ namespace CriadorDeCaes.Controllers {
          var animais = _context.Animais
                                .Include(a => a.Criador)
                                .Include(a => a.Raca)
-                               .Where(a=>a.Criador.UserId== userIdDaPessoaAutenticada)
-                               
-                               
+                               .Where(a => a.Criador.UserId == userIdDaPessoaAutenticada)
+
+
                                ;
 
          // invoco a view, fornecendo-lhe os dados que ela necessita
@@ -191,9 +191,9 @@ namespace CriadorDeCaes.Controllers {
 
          // atribuir os dados do PrecoCompraAux ao PrecoCompra
          if (!string.IsNullOrEmpty(animal.PrecoCompraAux)) {
-            animal.PrecoCompra = 
-               Convert.ToDecimal( animal.PrecoCompraAux
-                                        .Replace('.',',') );
+            animal.PrecoCompra =
+               Convert.ToDecimal(animal.PrecoCompraAux
+                                        .Replace('.', ','));
          }
 
 
@@ -246,7 +246,16 @@ namespace CriadorDeCaes.Controllers {
             return NotFound();
          }
 
-         var animais = await _context.Animais.FindAsync(id);
+
+         // var auxiliar
+         var userIdDaPessoaAutenticada = _userManager.GetUserId(User);
+
+
+
+         var animais = await _context.Animais
+                                     .Where(a => a.Id == id &&
+                                                 a.Criador.UserId == userIdDaPessoaAutenticada)
+                                     .FirstOrDefaultAsync();
          if (animais == null) {
             return NotFound();
          }
