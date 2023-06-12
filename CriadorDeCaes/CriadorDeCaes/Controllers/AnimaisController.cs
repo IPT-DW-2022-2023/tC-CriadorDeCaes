@@ -7,8 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CriadorDeCaes.Data;
 using CriadorDeCaes.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CriadorDeCaes.Controllers {
+
+   [Authorize] // esta anotação obriga o utilizador a estar autenticado
+
    public class AnimaisController : Controller {
 
       /// <summary>
