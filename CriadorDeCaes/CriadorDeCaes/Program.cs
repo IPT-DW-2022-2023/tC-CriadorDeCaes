@@ -8,9 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 
-// especifica onde está a Base de Dados
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")??throw new InvalidOperationException("não consegui encontrar o servidor de BD referenciado");
-// definir o tipo de servidor de base de dados que será utilizado
+// especifica onde estï¿½ a Base de Dados
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")??throw new InvalidOperationException("nï¿½o consegui encontrar o servidor de BD referenciado");
+// definir o tipo de servidor de base de dados que serï¿½ utilizado
 builder.Services.AddDbContext<ApplicationDbContext>(
    options => options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
