@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CriadorDeCaes.Data;
 using CriadorDeCaes.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CriadorDeCaes.Controllers {
 
@@ -20,6 +21,15 @@ namespace CriadorDeCaes.Controllers {
       /// </summary>
       private readonly ApplicationDbContext _context;
 
+
+      /// <summary>
+      /// ferramenta para aceder aos dados do utilizador
+      /// </summary>
+      private readonly UserManager<IdentityUser> _userManager;
+
+
+
+
       /// <summary>
       /// objeto com os dados do servidor web
       /// </summary>
@@ -27,22 +37,34 @@ namespace CriadorDeCaes.Controllers {
 
       public AnimaisController(
          ApplicationDbContext context,
-         IWebHostEnvironment environment) {
+         IWebHostEnvironment environment,
+         UserManager<IdentityUser> userManager) {
          _context = context;
          _environment = environment;
+         _userManager = userManager;
       }
 
       // GET: Animais
       public async Task<IActionResult> Index() {
 
+         // var auxiliar
+         var userIdDaPessoaAutenticada = _userManager.GetUserId(User);
+
+
+
          // pesquisar os dados dos animal, para os mostrar no ecrã
          // SELECT *
          // FROM Animais a INNER JOIN Criadores c ON a.CriadorFK = c.Id
          //                INNER JOIN Racas r ON a.RacaFK = r.Id
+         // WHERE c.UserId = Pessoa q se autenticou
          // *** esta expressão está escrita em LINQ ***
          var animais = _context.Animais
                                .Include(a => a.Criador)
-                               .Include(a => a.Raca);
+                               .Include(a => a.Raca)
+                               .Where(a=>a.Criador.UserId== userIdDaPessoaAutenticada)
+                               
+                               
+                               ;
 
          // invoco a view, fornecendo-lhe os dados que ela necessita
          return View(await animais.ToListAsync());
